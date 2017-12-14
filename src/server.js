@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const request = require('request')
-
+const request = require('request');
 
 const app = express();
 
@@ -53,7 +52,11 @@ const Weathertype = sequelize.define('weathertypes',{
     city: Sequelize.STRING,
     type: Sequelize.STRING,
     from_date: Sequelize.DATEONLY,
-    to_date: Sequelize.DATEONLY
+    to_date: Sequelize.DATEONLY,
+    airportcode: Sequelize.STRING,
+    latitude: Sequelize.REAL,
+    longitude: Sequelize.REAL
+
 },{
     timestamps: false
 })
@@ -74,8 +77,6 @@ app.post('/search',(req,res)=>{
     let longitude = req.body.lng;
     console.log(`fromdate------>${fromdate}`)
     console.log(`location------->${latitude} ${longitude}`)
-
-     let url = `http://api.geonames.org/findNearby?lat=${latitude}&lng=${longitude}&fcode=AIRP&radius=25&maxRows=100&username=mumtazakhtar`
     
    
     Weathertype.findAll({
@@ -87,16 +88,78 @@ app.post('/search',(req,res)=>{
         }
     }).then(data=>{
         console.log(`data from database--------->${data}`)
-       
-        
-        
-       
-        res.render('searchResults',{weathertype:input, data: data, fromdate:fromdate, todate:todate})
+        var allData = [];
+        for(var i=0; i<data.length; i++){
+          var latitude = data[i].latitude;
+          var longitude = data[i].longitude;
+          var cityName = data[i].city;
+          var airportCode = data[i].airportcode;
+          var weatherValue = 0;
+
+          let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${latitude},${longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
+
+          // var weatherPromise = callWeatherAPI(url);
+
+          request(url, function(err, response, body) {
+            if (err) {
+                res.render('index', { weather: null, error: 'please try again' });
+            } 
+            else {
+                let weather = JSON.parse(body)
+                // console.log(`weather api response body---->${JSON.stringify(weather)}`);
+                if (weather.currently == undefined) {
+                    res.render('index', { weather: null, error: 'please try again' });
+                } else {
+                    weatherValue = Math.floor((weather.currently.temperature-32)*5/9);
+                    console.log(weather.currently.temperature);
+                }
+
+            }
+            
+          });
+          console.log(`weather valuessss------>${JSON.stringify(weatherValue)}`);
+          allData.push({
+            city : cityName,
+            airportcode : airportCode,
+            weather : weatherValue
+          });
+
+        }
+
+        console.log(`all datass--------->${JSON.stringify(allData)}`)
+        res.render('searchResults',{weathertype:input, data: allData, fromdate:fromdate, todate:todate})
 
         })
 
 })
 
+// Seperate method for calling weather API for each city using promise.
+function callWeatherAPI(url) {
+  return new Promise(function(resolve, reject) {
+    request(url, function(err, response, body) {
+      var weatherValue = 0;
+            if (err) {
+                res.render('index', { weather: null, error: 'please try again' });
+            } 
+            else {
+                let weather = JSON.parse(body)
+                // console.log(`weather api response body---->${JSON.stringify(weather)}`);
+                if (weather.currently == undefined) {
+                    res.render('index', { weather: null, error: 'please try again' });
+                } else {
+                    weatherValue = Math.floor((weather.currently.temperature-32)*5/9);
+                    setTimeout(function(){
+                      resolve(weatherValue);
+                    }, 2000);
+                    //resolve(weatherValue);
+                    console.log(weather.currently.temperature);
+                }
+
+            }
+            
+          });
+  })
+}
 
 // show flight results
  app.post('/flightSearch', function(req,res){
@@ -168,7 +231,7 @@ app.post('/search',(req,res)=>{
                 originCity: responseSegments[i].origin.city.name
               });
             }
-            
+              
            var flight = {
             duration : flightDuration,
             segments : segments,

@@ -45,7 +45,7 @@ html
 
               each value in data
                 .flight_results
-                  span(style="font-family: 'Martel Sans', sans-serif;") #{value.city} has the average temperature of 17C and is #{weathertype}
+                  span(style="font-family: 'Martel Sans', sans-serif;") #{value.city} has the average temperature of #{value.weather} and is #{weathertype}
                   
                   if (weathertype == 'hot')
                     span
@@ -69,7 +69,7 @@ html
                           input(type='text', value= `${fromdate}`,name='fromdate' )
                           input(type='text', value=`${todate}`, name='todate')
                           input(type='text',value=`${value.city}`, name='city')
-            .col-lg-2
+              .col-lg-2
                           
                           
 
