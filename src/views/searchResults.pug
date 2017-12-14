@@ -1,0 +1,87 @@
+doctype html
+html
+  head
+    title Fly High
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel="stylesheet", type="text/css", href="css/searchstyle.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Martel+Sans" rel="stylesheet")
+  body
+    .container-fluid
+      nav.navbar.navbar-default.nav
+        .container
+          .navbar-header
+            a.navbar-brand(href='#', style="color: white; font-size:20px; font-family: 'Berkshire Swash', cursive;") Fly High
+          ul.nav.navbar-nav
+            li
+              a(href='/', style="color: white;") Home
+            li
+              a(href='#', style="color: white;") contact us
+            li
+              a(href='#', style="color: white;") About us
+
+      .searchResults
+        .container
+          .rows
+            .col-lg-2
+            .col-lg-8
+              h2(style="font-family: 'Martel Sans', sans-serif;") Your Search Results are here..!
+            .col-lg-4
+      .flightResult
+        .container
+          .rows
+            .col-lg-2
+            .col-lg-8
+              h2 Flights from Amsterdam...
+      .flightResults
+        .container
+          .rows
+            .col-lg-2
+            .col-lg-8
+
+              each value in data
+                .flight_results
+                  span(style="font-family: 'Martel Sans', sans-serif;") #{value.city} has the average temperature of 17C and is #{weathertype}
+                  
+                  if (weathertype == 'hot')
+                    span
+                      img(src='images/sunicon.jpg', width='6%')
+                  else if (weathertype == 'cold')
+                    span
+                      img(src='images/cloudicon.jpg', width='6%')
+
+
+                  p
+                    span.max
+                      <b>Amsterdam</b>
+                    span.max
+                      img(src='images/flighticon.png', width='10%')
+                    span.max#cityName
+                      <b>#{value.city}</b>
+                    span
+                      button.btn.btn-default.viewFlights(type='submit',form='hiddenForm' style="display:inline; margin-left:30px;") Check flight          
+                        //- a(href=`/flightSearch?cityName=${value.city}`)
+                        form.hiddenform(action='/flightSearch', method='post', id='hiddenForm' hidden)
+                          input(type='text', value= `${fromdate}`,name='fromdate' )
+                          input(type='text', value=`${todate}`, name='todate')
+                          input(type='text',value=`${value.city}`, name='city')
+            .col-lg-2
+                          
+                          
+
+  script(src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js')
+  //- script.
+  //-   $('.viewFlights').click(function(){
+  //-   var cityName = $('#cityName').val()
+  //-    console.log(cityName);
+
+  //-    $.get('/getFlights', {cityNane: cityName}, function(data){
+
+  //-    })
+  //-   })
+
+

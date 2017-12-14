@@ -1,0 +1,84 @@
+doctype html
+html
+  head
+    title Fly High
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel="stylesheet", type="text/css", href="css/searchstyle.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Martel+Sans" rel="stylesheet")
+
+  body
+    .container-fluid
+      nav.navbar.navbar-default.nav
+        .container
+          .navbar-header
+            a.navbar-brand(href='#', style="color: white; font-size:20px; font-family: 'Berkshire Swash', cursive;") Fly High
+          ul.nav.navbar-nav
+            li
+              a(href='/', style="color: white;") Home
+            li
+              a(href='#', style="color: white;") contact us
+            li
+              a(href='#', style="color: white;") About us
+    .container
+      .rows
+        .col-lg-4
+        .col-lg-4
+          h2 Amsterdam to #{cityName}
+    .flightdetails.displayFlights
+      .container
+        .rows
+          .col-lg-2
+            h3(style="margin-top:44px;") #{flight.segments[0].carrierName} Airlines
+            button.btn.btn-default.viewFullDetails(href="www.google.com", type='button', style="display:inline; margin-left:2px; background-color:#1e90ff; color: white;") View Details
+          .col-lg-2
+            
+            p.city_name
+              <b style="margin-right:20px;"> #{flight.segments[0].originCity} </b>
+
+          .col-lg-2
+            span
+              p(style="display:inline;") Duration: #{flight.duration} hrs
+              img(src='images/flighticon.png', width='70%')
+          .col-lg-2
+            p.city_name
+              <b> #{flight.segments[1].destinationCity} </b>
+          .col-lg-2
+            p Price/adult
+            h3 #{flight.price}EUR
+            
+          .col-lg-2
+            button.btn.btn-default.viewFlights(type='button', style="display:inline; margin-left:30px; margin-top:50px;") Book Now
+
+       
+                 
+      each value in flight.segments
+        .container.segments(style="display:none; backgroundcolor:white;")
+          .view_details
+            .rows
+              .col-lg-2
+                h4 #{value.carrierName} Airlines
+              .col-lg-2.cityName
+                p   
+                  <b> #{value.originCity} </b>
+              .col-lg-2
+                span
+                  //- p(style="display:inline;") Duration: #{flight.duration}
+                  img(src='images/rightarrow.png', width='50%')
+              .col-lg-2.cityName
+                p
+                  <b> #{value.destinationCity} </b>
+              .col-lg-4 
+                p <b>Arrival time:</b> #{value.arrivalTime}
+                p <b>Departure time: </b> #{value.departureTime}
+
+
+  script(src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js')
+  script.
+    $('.viewFullDetails').click(function(){
+    $('.segments').toggle()
+    })

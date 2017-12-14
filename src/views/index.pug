@@ -1,0 +1,78 @@
+doctype html
+html
+  head
+    title Fly High
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel="stylesheet", type="text/css", href="css/style.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+    link(href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Martel+Sans" rel="stylesheet")
+  body
+    .container-fluid
+      nav.navbar.navbar-default.nav
+        .container
+          .navbar-header
+            a.navbar-brand(href='#', style="color: white; font-size:20px; font-family: 'Berkshire Swash', cursive;") Fly High
+          ul.nav.navbar-nav
+            li
+              a(href='#', style="color: white;") Home
+            li
+              a(href='/allposts', style="color: white;") All posts
+            li
+              a(href='#', style="color: white;") About us
+          //- ul.nav.navbar-nav.navbar-right
+            
+          //-   li
+          //-     form#displayForm(action='/login', method='POST', autocomplete='off')
+                
+          //-       input.field(type='text', name='name', placeholder="Enter your name")
+                
+          //-       input.field(type='password', name='password', placeholder= "Enter password")
+                
+          //-       button.field(type='submit', name="login") Login
+          //-   li
+          //-     a(href='/users/new')
+          //-       span.glyphicon.glyphicon-user
+          //-       |  Sign Up
+    
+    .search
+      .container
+        .rows
+          .col-lg-4
+            form.fieldset(action='/search', method='post', name='myform', autocomplete='off', onload='getLocation()')
+              label(for='from date') From date
+              input.form-control.field(type='Date', name='fromdate', placeholder='From Date')
+              label(for="to date") To Date
+              input.form-control.field(type='Date', name='todate', placeholder="To Date")
+              input.form-control.field(type='text', name='weatherType', placeholder="Weather type")
+              input.form-control.field#maplng(type='hidden', name='lng',value="4.8519787", data-long )
+              input.form-control.field#maplat(type='hidden', name='lat',value="52.282469899999995", data-lat )
+              button.form-control.field(type='submit', name="search", width='50%', ) Search
+ 
+
+      script.
+        //- var x = document.getElementById("maplat").value;
+        //- var y = document.getElementById("maplng").value;
+        function getLocation() {
+        if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+        } 
+        else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        }
+        function showPosition(position) {
+        
+        x = position.coords.latitude; 
+        y = position.coords.longitude; 
+
+        console.log(x);
+        console.log(y);
+
+        $("#maplng").data("long", y)
+        $("#maplat").data("lat", x)
+        }
+        

@@ -1,0 +1,24 @@
+body {
+    background: url('../images/backgroundimage.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.nav{
+	background-color: #1e90ff;
+	color: white;
+}
+.nav a{
+	color: white;
+}
+.fieldset{
+ margin-top: 200px;
+}
+.field{
+	margin: 2px 2px 16px 2px;
+
+}
+label{
+	color: white;
+}

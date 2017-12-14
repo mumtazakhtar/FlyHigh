@@ -1,0 +1,100 @@
+body {
+    background: url('../images/searchbackgroundimage.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.nav{
+	background-color: #1e90ff;
+	color: white;
+}
+.nav a{
+	color: white;
+}
+.flight_results{
+	background-color: white;
+	color: black;
+	margin: 4px 4px 20px 4px;
+	padding: 20px 20px 20px 20px;
+	border-style: thin;
+	border-color: black;
+	font-family: Martel Sans,sans-serif;
+
+
+
+}
+.details{
+	background-color: transparent;
+	color: black;
+	margin: 4px 4px 20px 4px;
+	padding: 20px 20px 20px 20px;
+	border-style: thin;
+	border-color: black;
+	font-family: Martel Sans,sans-serif;
+
+}
+.viewFlights{
+	background-color:#1e90ff;
+	color: white; 
+}
+h2 {
+	font-family: Martel Sans,sans-serif;
+	text-transform: capitalize;
+}
+p{
+	font-family: Martel Sans,sans-serif;
+
+}
+.max{
+	font-family: Martel Sans,sans-serif;
+	margin-right: 50px;
+	font-size: 30px;
+}
+.displayFlights{
+	background-color: white;
+	color: black;
+	margin-top: 20px;
+	margin-right: 40px;
+	margin-left: 40px;
+	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+}
+.view_details{
+	background-color: white;
+	color: black;
+
+}
+.segments{
+	background-color: white;
+	color: black;
+border-color: lightgray;
+    border: solid;
+    border-width: 1px;
+    margin-top: 6px;
+    margin-bottom: 0px;
+    padding-top: 20px;;
+
+}
+.city_name{
+	font-family: Martel Sans,sans-serif;
+	margin-right: 50px;
+	font-size: 30px;
+	margin-top: 50px;
+
+}
+.cityName{
+	    font-family: Martel Sans,sans-serif;
+    margin-right: 0px;
+    font-size: 22px;
+    margin-top: 20px;
+
+}
+.hiddenform input{
+	width: 0;
+
+}
