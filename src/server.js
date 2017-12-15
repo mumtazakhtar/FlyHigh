@@ -5,6 +5,7 @@ const Sequelize = require('sequelize');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const request = require('request');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -89,49 +90,79 @@ app.post('/search',(req,res)=>{
     }).then(data=>{
         console.log(`data from database--------->${data}`)
         var allData = [];
-        for(var i=0; i<data.length; i++){
-          var latitude = data[i].latitude;
-          var longitude = data[i].longitude;
-          var cityName = data[i].city;
-          var airportCode = data[i].airportcode;
-          var weatherValue = 0;
 
-          let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${latitude},${longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
+        data.forEach(city =>{
+          let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${city.latitude},${city.longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
 
-          // var weatherPromise = callWeatherAPI(url);
+          console.log(`We have ${JSON.stringify(city.city)}`)
+          fetch(url).then( response =>{
+            response.json().then( json =>{
+              console.log(`city----->${JSON.stringify(city)}`)
+              console.log(`The weather is ${json.currently.temperature}`)
 
-          request(url, function(err, response, body) {
-            if (err) {
-                res.render('index', { weather: null, error: 'please try again' });
-            } 
-            else {
-                let weather = JSON.parse(body)
-                // console.log(`weather api response body---->${JSON.stringify(weather)}`);
-                if (weather.currently == undefined) {
-                    res.render('index', { weather: null, error: 'please try again' });
-                } else {
-                    weatherValue = Math.floor((weather.currently.temperature-32)*5/9);
-                    console.log(weather.currently.temperature);
-                }
 
-            }
-            
-          });
-          console.log(`weather valuessss------>${JSON.stringify(weatherValue)}`);
-          allData.push({
-            city : cityName,
-            airportcode : airportCode,
-            weather : weatherValue
-          });
+              allData.push({
 
-        }
+                city : city.city,
+               airportcode : city.airportcode,
+                weather : json.currently.temperature
 
-        console.log(`all datass--------->${JSON.stringify(allData)}`)
-        res.render('searchResults',{weathertype:input, data: allData, fromdate:fromdate, todate:todate})
 
+              })
+
+            })
+
+              
+          })
+
+          })
+          setTimeout(function(){res.render('searchResults',{weathertype:input, data: allData, fromdate:fromdate, todate:todate})
+},3000);
         })
+       })
+        // for(var i=0; i<data.length; i++){
+        //   var latitude = data[i].latitude;
+        //   var longitude = data[i].longitude;
+        //   var cityName = data[i].city;
+        //   var airportCode = data[i].airportcode;
+        //   var weatherValue = 0;
 
-})
+        //   let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${latitude},${longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
+
+        //   // var weatherPromise = callWeatherAPI(url);
+
+        //   request(url, function(err, response, body) {
+        //     if (err) {
+        //         res.render('index', { weather: null, error: 'please try again' });
+        //     } 
+        //     else {
+        //         let weather = JSON.parse(body)
+        //         // console.log(`weather api response body---->${JSON.stringify(weather)}`);
+        //         if (weather.currently == undefined) {
+        //             res.render('index', { weather: null, error: 'please try again' });
+        //         } else {
+        //             weatherValue = Math.floor((weather.currently.temperature-32)*5/9);
+        //             console.log(weather.currently.temperature);
+        //         }
+
+        //     }
+            
+        //   });
+        //   console.log(`weather valuessss------>${JSON.stringify(weatherValue)}`);
+        //   allData.push({
+        //     city : cityName,
+        //     airportcode : airportCode,
+        //     weather : weatherValue
+        //   });
+
+        // }
+
+        // console.log(`all datass--------->${JSON.stringify(allData)}`)
+        
+
+       
+
+// })
 
 // Seperate method for calling weather API for each city using promise.
 function callWeatherAPI(url) {
@@ -200,7 +231,7 @@ function callWeatherAPI(url) {
                   arrivalTime: responseSegments[j].arrivalDateTime,
                   departureTime: responseSegments[j].departureDateTime,
                   destinationName: responseSegments[j].destination.name,
-                  destinationCity: responseSegments[j].destination.name,
+                  destinationCity: responseSegments[j].destination.city.name,
                   destinationCode: responseSegments[j].destination.code,
                   carrierName: responseSegments[j].marketingFlight.operatingFlight.carrier.name,
                   originName: responseSegments[j].origin.name,
