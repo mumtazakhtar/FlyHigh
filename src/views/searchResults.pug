@@ -63,12 +63,14 @@ html
                     span.max#cityName
                       <b>#{value.city}</b>
                     span
-                      button.btn.btn-default.viewFlights(type='submit',form='hiddenForm' style="display:inline; margin-left:30px;") Check flight          
-                        //- a(href=`/flightSearch?cityName=${value.city}`)
-                        form.hiddenform(action='/flightSearch', method='post', id='hiddenForm' hidden)
-                          input(type='text', value= `${fromdate}`,name='fromdate' )
-                          input(type='text', value=`${todate}`, name='todate')
-                          input(type='text',value=`${value.city}`, name='city')
+                      a(href=`/flightSearch?cityName=${value.city}&airportcode=${value.airportcode}&fromdate=${fromdate}&todate=${todate}`)
+                        button.btn.btn-default.viewFlights(type='submit',form='hiddenForm' style="display:inline; margin-left:30px;") Check flights         
+                        
+                        //- form.hiddenform(action='/flightSearch', method='post', id='hiddenForm' hidden)
+                        //-   input(type='text', value= `${fromdate}`,name='fromdate' )
+                        //-   input(type='text', value=`${todate}`, name='todate')
+                        //-   input(type='text',value=`${value.city}`, name='city')
+                        //-   input(type='text', value=`${value.airportcode}`, name='airportcode')
               .col-lg-2
                           
                           

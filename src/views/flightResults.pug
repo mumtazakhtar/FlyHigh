@@ -29,52 +29,53 @@ html
         .col-lg-4
         .col-lg-4
           h2 Amsterdam to #{cityName}
-    .flightdetails.displayFlights
-      .container
-        .rows
-          .col-lg-2
-            h3(style="margin-top:44px;") #{flight.segments[0].carrierName} Airlines
-            button.btn.btn-default.viewFullDetails(href="www.google.com", type='button', style="display:inline; margin-left:2px; background-color:#1e90ff; color: white;") View Details
-          .col-lg-2
-            
-            p.city_name
-              <b style="margin-right:20px;"> #{flight.segments[0].originCity} </b>
+    each flight in flights
+      .flightdetails.displayFlights
+        .container
+          .rows
+            .col-lg-2
+              h3(style="margin-top:44px;") #{flight.segments[0].carrierName} Airlines
+              button.btn.btn-default.viewFullDetails(href="www.google.com", type='button', style="display:inline; margin-left:2px; background-color:#1e90ff; color: white;") View Details
+            .col-lg-2
+              
+              p.city_name
+                <b style="margin-right:20px;"> #{flight.segments[0].originName} </b>
 
-          .col-lg-2
-            span
-              p(style="display:inline;") Duration: #{flight.duration} hrs
-              img(src='images/flighticon.png', width='70%')
-          .col-lg-2
-            p.city_name
-              <b> #{flight.segments[1].destinationCity} </b>
-          .col-lg-2
-            p Price/adult
-            h3 #{flight.price}EUR
-            
-          .col-lg-2
-            button.btn.btn-default.viewFlights(type='button', style="display:inline; margin-left:30px; margin-top:50px;") Book Now
+            .col-lg-2
+              span
+                p(style="display:inline;") Duration: #{flight.duration} hrs
+                img(src='images/flighticon.png', width='70%')
+            .col-lg-2
+              p.city_name
+                <b> #{flight.segments[flight.segments.length-1].destinationCity} </b>
+            .col-lg-2.price
+              p Price/adult
+              h3 #{flight.price}EUR
+              
+            .col-lg-2
+              button.btn.btn-default.viewFlights(type='button', style="display:inline; margin-left:30px; margin-top:50px;") Book Now
 
-       
-                 
-      each value in flight.segments
-        .container.segments(style="display:none; backgroundcolor:white;")
-          .view_details
-            .rows
-              .col-lg-2
-                h4 #{value.carrierName} Airlines
-              .col-lg-2.cityName
-                p   
-                  <b> #{value.originCity} </b>
-              .col-lg-2
-                span
-                  //- p(style="display:inline;") Duration: #{flight.duration}
-                  img(src='images/rightarrow.png', width='50%')
-              .col-lg-2.cityName
-                p
-                  <b> #{value.destinationCity} </b>
-              .col-lg-4 
-                p <b>Arrival time:</b> #{value.arrivalTime}
-                p <b>Departure time: </b> #{value.departureTime}
+         
+                   
+        each value in flight.segments
+          .container.segments(style="display:none; backgroundcolor:white;")
+            .view_details
+              .rows
+                .col-lg-2
+                  h4 #{value.carrierName} Airlines
+                .col-lg-2.cityName
+                  p   
+                    <b> #{value.originCity} </b>
+                .col-lg-2
+                  span
+                    //- p(style="display:inline;") Duration: #{flight.duration}
+                    img(src='images/rightarrow.png', width='50%')
+                .col-lg-2.cityName
+                  p
+                    <b> #{value.destinationCity} </b>
+                .col-lg-4 
+                  p <b>Arrival time:</b> #{value.arrivalTime}
+                  p <b>Departure time: </b> #{value.departureTime}
 
 
   script(src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js')

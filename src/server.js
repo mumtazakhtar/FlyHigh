@@ -162,17 +162,21 @@ function callWeatherAPI(url) {
 }
 
 // show flight results
- app.post('/flightSearch', function(req,res){
-    var cityName = req.body.city;
-    var fromdate = req.body.fromdate;
-    var todate = req.body.todate;
+ app.get('/flightSearch', function(req,res){
+    var cityName = req.query.cityName;
+    var fromdate = req.query.fromdate;
+    var todate = req.query.todate;
+    var airportcode = req.query.airportcode;
+    console.log("airport code" + airportcode)
+    console.log("city name" + cityName)
     console.log(`from date-->${fromdate}`)
 
    let requesturl = 'https://api.klm.com/opendata/flightoffers/available-offers'
 
+
     request.post({
         url: requesturl,
-        json: jsonData("AMS", "SYD", fromdate),
+        json: jsonData("AMS", airportcode, fromdate),
         headers: requestHeader()}, function(err, response, body){
             
           
@@ -181,70 +185,65 @@ function callWeatherAPI(url) {
         }
         else{
 
-            // console.log("status" + response.statusCode);
+            console.log("status" + response.statusCode);
             // console.log("body----->"+ JSON.stringify(body));
-        //     var flightproducts = [];
-        //     for(i=0; i<body.flightProducts; i++) {
-        //       var flightDuration = body.flightProducts[i].connections[0].duration;
-        //       var flightPrice = body.flightProducts[i].price.totalPrice;
-        //       var responseSegments = body.flightProducts[i].connections[0].segments;
-        //       var segments = [];
-        //       console.log("response segments------->"+ JSON.stringify(responseSegments));
-        //       console.log(`flight price-------->${flightPrice}`);
-        //       for(j=0; j<responseSegments.length; j++){
-        //         segments.push({
-        //           arrivalTime: responseSegments[j].arrivalDateTime,
-        //           departureTime: responseSegments[j].departureDateTime,
-        //           destinationName: responseSegments[j].destination.name,
-        //           destinationCity: responseSegments[j].destination.city.name,
-        //           destinationCode: responseSegments[j].destination.code,
-        //           carrierName: responseSegments[j].marketingFlight.operatingFlight.carrier.name,
-        //           originName: responseSegments[j].origin.name,
-        //           originCity: responseSegments[j].origin.city.name
-        //         });
+            var flightproducts = [];
+            for(i=0; i<body.flightProducts.length; i++) {
+              var flightDuration = Math.floor((body.flightProducts[i].connections[0].duration)/60);
+              var flightPrice = body.flightProducts[i].price.totalPrice;
+              var responseSegments = body.flightProducts[i].connections[0].segments;
+              var segments = [];
+              // console.log("response segments------->"+ JSON.stringify(responseSegments));
+              console.log(`flight price-------->${flightPrice}`);
+              for(j=0; j<responseSegments.length; j++){
+                segments.push({
+                  arrivalTime: responseSegments[j].arrivalDateTime,
+                  departureTime: responseSegments[j].departureDateTime,
+                  destinationName: responseSegments[j].destination.name,
+                  destinationCity: responseSegments[j].destination.name,
+                  destinationCode: responseSegments[j].destination.code,
+                  carrierName: responseSegments[j].marketingFlight.operatingFlight.carrier.name,
+                  originName: responseSegments[j].origin.name,
+                  originCity: responseSegments[j].origin.city.name
+                });
 
-        //        console.log("origin city" + JSON.stringify(originCity));
+               // console.log("response segments------->" + JSON.stringify(segments));
 
-        //       }
-        //     }
-        //       flightproducts.push({
-        //         duration : flightDuration,
-        //         segments : segments,
-        //         price: flightPrice
-        //       });
-            
-
-        // }
-            var flightDuration = Math.floor((body.flightProducts[0].connections[0].duration)/60);
-            var responseSegments = body.flightProducts[0].connections[0].segments;
-            var price = body.flightProducts[0].price.totalPrice;
-            var segments = [];
-            for(i=0; i < responseSegments.length; i++){
-              segments.push({
-                arrivalTime: responseSegments[i].arrivalDateTime,
-                departureTime: responseSegments[i].departureDateTime,
-                destinationName: responseSegments[i].destination.name,
-                destinationCity: responseSegments[i].destination.city.name,
-                destinationCode: responseSegments[i].destination.code,
-                carrierName: responseSegments[i].marketingFlight.operatingFlight.carrier.name,
-                originName: responseSegments[i].origin.name,
-                originCity: responseSegments[i].origin.city.name
+              }
+              flightproducts.push({
+                duration : flightDuration,
+                segments : segments,
+                price: flightPrice
               });
             }
+        }
+           //  var flightDuration = Math.floor((body.flightProducts[0].connections[0].duration)/60);
+           //  var responseSegments = body.flightProducts[0].connections[0].segments;
+           //  var price = body.flightProducts[0].price.totalPrice;
+           //  var segments = [];
+           //  for(i=0; i < responseSegments.length; i++){
+           //    segments.push({
+           //      arrivalTime: responseSegments[i].arrivalDateTime,
+           //      departureTime: responseSegments[i].departureDateTime,
+           //      destinationName: responseSegments[i].destination.name,
+           //      destinationCity: responseSegments[i].destination.city.name,
+           //      destinationCode: responseSegments[i].destination.code,
+           //      carrierName: responseSegments[i].marketingFlight.operatingFlight.carrier.name,
+           //      originName: responseSegments[i].origin.name,
+           //      originCity: responseSegments[i].origin.city.name
+           //    });
+           //  }
               
-           var flight = {
-            duration : flightDuration,
-            segments : segments,
-            price: price
-           }
-        
-    
+           // var flight = {
+           //  duration : flightDuration,
+           //  segments : segments,
+           //  price: price
+           // }
+          // console.log("input selected----->" + JSON.stringify(flightproducts));
+          res.render('flightResults', {flights : flightproducts, cityName:cityName})    
       }
-    console.log(`segments----->${segments}`)
-    // console.log("input selected----->" + JSON.stringify(flightproducts));
-  
-    res.render('flightResults', {flight:flight, cityName:cityName})
-  })
+    // console.log(`segments----->${segments}`)
+  )
  })   
 
 //Json method

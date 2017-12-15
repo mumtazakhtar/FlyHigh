@@ -83,7 +83,7 @@ border-color: lightgray;
 .city_name{
 	font-family: Martel Sans,sans-serif;
 	margin-right: 50px;
-	font-size: 30px;
+	font-size: 25px;
 	margin-top: 50px;
 
 }
@@ -97,4 +97,7 @@ border-color: lightgray;
 .hiddenform input{
 	width: 0;
 
+}
+.price{
+	margin-top: 20px;
 }
