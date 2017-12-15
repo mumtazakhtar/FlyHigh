@@ -36,42 +36,49 @@ html
           .rows
             .col-lg-2
             .col-lg-8
-              h2 Flights from Amsterdam...
+              h2 Places you can visit from Amsterdam...
       .flightResults
         .container
           .rows
             .col-lg-2
             .col-lg-8
+              if data
 
-              each value in data
-                .flight_results
-                  span(style="font-family: 'Martel Sans', sans-serif;") #{value.city} has the average temperature of #{value.weather} and is #{weathertype}
-                  
-                  if (weathertype == 'hot')
-                    span
-                      img(src='images/sunicon.jpg', width='6%')
-                  else if (weathertype == 'cold')
-                    span
-                      img(src='images/cloudicon.jpg', width='6%')
+                each value in data
+                  .flight_results
+                    span(style="font-family: 'Martel Sans', sans-serif; text-transform: capitalize") #{value.city} is expected to have an average temperature of #{value.weather} degress and is
+                    
+                    if (weathertype == 'hot')
+                      span
+                        img(src='images/sunicon.jpg', width='10%')
+                    else if (weathertype == 'cold')
+                      span
+                        img(src='images/snowicon.jpg', width='10%')
 
 
-                  p
-                    span.max
-                      <b>Amsterdam</b>
-                    span.max
-                      img(src='images/flighticon.png', width='10%')
-                    span.max#cityName
-                      <b>#{value.city}</b>
-                    span
-                      a(href=`/flightSearch?cityName=${value.city}&airportcode=${value.airportcode}&fromdate=${fromdate}&todate=${todate}`)
-                        button.btn.btn-default.viewFlights(type='submit',form='hiddenForm' style="display:inline; margin-left:30px;") Check flights         
-                        
-                        //- form.hiddenform(action='/flightSearch', method='post', id='hiddenForm' hidden)
-                        //-   input(type='text', value= `${fromdate}`,name='fromdate' )
-                        //-   input(type='text', value=`${todate}`, name='todate')
-                        //-   input(type='text',value=`${value.city}`, name='city')
-                        //-   input(type='text', value=`${value.airportcode}`, name='airportcode')
+                    p
+                      span.max
+                        <b>Amsterdam</b>
+                      span.max
+                        img(src='images/flighticon.png', width='10%')
+                      span.max#cityName
+                        <b style="text-transform:capitalize">#{value.city}</b>
+                      span
+                        a(href=`/flightSearch?cityName=${value.city}&airportcode=${value.airportcode}&fromdate=${fromdate}&todate=${todate}`)
+                          button.btn.btn-default.viewFlights(type='submit',form='hiddenForm' style="display:inline; margin-left:30px;") Check flights         
+                          
+                          //- form.hiddenform(action='/flightSearch', method='post', id='hiddenForm' hidden)
+                          //-   input(type='text', value= `${fromdate}`,name='fromdate' )
+                          //-   input(type='text', value=`${todate}`, name='todate')
+                          //-   input(type='text',value=`${value.city}`, name='city')
+                          //-   input(type='text', value=`${value.airportcode}`, name='airportcode')
+                else
+                  h2 Sorry nothing to display 
               .col-lg-2
+                
+
+
+
                           
                           
 

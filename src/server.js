@@ -88,81 +88,40 @@ app.post('/search',(req,res)=>{
             
         }
     }).then(data=>{
-        console.log(`data from database--------->${data}`)
-        var allData = [];
+    console.log(`data from database--------->${data}`)
+var allData = [];
 
-        data.forEach(city =>{
-          let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${city.latitude},${city.longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
+data.forEach(city => {
+    let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${city.latitude},${city.longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
 
-          console.log(`We have ${JSON.stringify(city.city)}`)
-          fetch(url).then( response =>{
-            response.json().then( json =>{
-              console.log(`city----->${JSON.stringify(city)}`)
-              console.log(`The weather is ${json.currently.temperature}`)
-
-
-              allData.push({
-
-                city : city.city,
-               airportcode : city.airportcode,
-                weather : json.currently.temperature
+    console.log(`We have ${JSON.stringify(city.city)}`)
+    fetch(url).then(response => {
+        response.json().then(json => {
+            console.log(`city----->${JSON.stringify(city)}`)
+            console.log(`The weather is ${json.currently.temperature}`)
 
 
-              })
+            allData.push({
+
+                city: city.city,
+                airportcode: city.airportcode,
+                weather: Math.floor(((json.currently.temperature)-32)*5/9)
+
 
             })
 
-              
-          })
-
-          })
-          setTimeout(function(){res.render('searchResults',{weathertype:input, data: allData, fromdate:fromdate, todate:todate})
-},3000);
         })
-       })
-        // for(var i=0; i<data.length; i++){
-        //   var latitude = data[i].latitude;
-        //   var longitude = data[i].longitude;
-        //   var cityName = data[i].city;
-        //   var airportCode = data[i].airportcode;
-        //   var weatherValue = 0;
 
-        //   let url = `https://api.darksky.net/forecast/a739663e95728c915f027da8e730bc4b/${latitude},${longitude},${fromdate}T08:00:00?exclude=hourly,daily,flags`;
 
-        //   // var weatherPromise = callWeatherAPI(url);
+    })
 
-        //   request(url, function(err, response, body) {
-        //     if (err) {
-        //         res.render('index', { weather: null, error: 'please try again' });
-        //     } 
-        //     else {
-        //         let weather = JSON.parse(body)
-        //         // console.log(`weather api response body---->${JSON.stringify(weather)}`);
-        //         if (weather.currently == undefined) {
-        //             res.render('index', { weather: null, error: 'please try again' });
-        //         } else {
-        //             weatherValue = Math.floor((weather.currently.temperature-32)*5/9);
-        //             console.log(weather.currently.temperature);
-        //         }
+})
+setTimeout(function() {
+res.render('searchResults', { weathertype: input, data: allData, fromdate: fromdate, todate: todate })
+}, 3000);
+})
+})
 
-        //     }
-            
-        //   });
-        //   console.log(`weather valuessss------>${JSON.stringify(weatherValue)}`);
-        //   allData.push({
-        //     city : cityName,
-        //     airportcode : airportCode,
-        //     weather : weatherValue
-        //   });
-
-        // }
-
-        // console.log(`all datass--------->${JSON.stringify(allData)}`)
-        
-
-       
-
-// })
 
 // Seperate method for calling weather API for each city using promise.
 function callWeatherAPI(url) {
