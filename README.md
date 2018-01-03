@@ -13,9 +13,9 @@ The flyHigh app is my Final project designed during the last week of NYCDA 'Web 
 
 ## Table of contents
 
-- [frameworks] (#Technologies and Languages)
-- [usage] (#concepts utilized)
-- [How to use] (#How to use)
+- Technologies and Languages
+- concepts utilized
+- How to use
 
 ## Technologies and Languages
 + HTML5
