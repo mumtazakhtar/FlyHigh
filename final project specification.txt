@@ -1,0 +1,69 @@
+State the purpose of your application clearly and concisely. Try to do it in a single sentence.
+Fly high is for users who want to plan for a vacation.
+This app takes minimal input from the users and provides them with more suggestions.
+
+Fly High is a nodejs application where users can provide their holiday dates and
+ weather type and this app provides them with the cities along with the temperature on that specific date.
+Also this app gives the available flight details to that city.
+
+
+Answer the following questions as you did in your Group Project:
+- What is the problem you are trying to solve?
+I am trying to solve the problem of users who cannot find weather and flight details at the same time.
+- Who is your target audience?
+Vacation planners.
+- What are your specific goals?
+To provide users with all the cities, weather at that specific city and to suggest all the flights to that specific city.
+
+
+In another block, answer the following:
+- What is your business model? Where is your revenue coming from?
+For each user who is booking flight from the website, airline pays some amount to the company.  
+- What are the costs of your business?
+I built this website with no cost.Every Api is used is an open source.
+
+Market research:
+- Who is your current competition?
+SkyScanner
+- How is your product different from currently available competitors?
+This also shows the weather at all the suggested cities. 
+- What is the current supply / demand for your product?
+100/100
+
+Technical Specifications:
+- What data will you need to store? How will it be organized? Describe each table, its columns, and its relationships with other tables.
+I need to store the details of weather types throughtout the year in cities all over the world.
+I used one table "weathertype". It has 7 columns.(city, type, from_date, to_date, latitude,longitude, airportcode)
+ 1.city: Name of the city.
+ 2.type: Type of the weather.
+ 3.from_date and to_date: Duration of how long the weather type exists in that city.
+ 4.latitude and longitude: To predict the data my api takes parameters as date, latitude and longitude of that city.
+ 5.Airport code: Airport code of that city is used in airlines api to check the available flights.
+
+
+- What does your product look like? List each view, their purpose, and how they work.
+1.Home page:
+when the user opens the website,home page appears with a beautiful background which shows a form which has from-date, to-date and weather type.
+If the user gives the from-date, to-date, weather type and submits the search, 
+These details go to the server and checks in the database the related cities with the weather type on that particular date.
+Now it redirects to a new search results page with all the data from the database. 
+
+2.Search results page:
+Search results page provides all the related search results.It suggests the names of the cities along with the expected weather on that particular date and 
+all the flight details.
+It also has the check Flights button; when clicked takes the cityname, airportcode, fromdate as query parameters and sends it to the server.
+Now in the backend there is a query which looks for cityname, from date and these inputs are given as parameters to url of KLM API.
+This API gives flights to the city on that particular date as output.
+
+3.Flight result page:
+Flight results page displays the all the flights from the nearest airport. 
+
+- Describe any complex business logic that is happening in your application. For example, how does data flow through your application.
+Data is taken from the client and then it goes to the database through server.Now Server checks in the database and displays the results on the client side.
+Now depending on the client's selection; server checks for the possible flights using an external API and displays the results to the client on a new page.  
+
+Have a timeline of milestones to reach, including deadlines:
+- Create milestones that represent the discrete blocks of functionality.
+Day1: home page
+Day2: serach results page
+Day3 & Day4: flight results page
