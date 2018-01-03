@@ -13,8 +13,8 @@ The flyHigh app is my Final project designed during the last week of NYCDA 'Web 
 
 ## Table of contents
 
-- [frameworks](#Technologies and Languages)
-- [usage](#concepts utilized)
+- [frameworks] (#Technologies and Languages)
+- [usage] (#concepts utilized)
 - [How to use] (#How to use)
 
 ## Technologies and Languages
@@ -25,10 +25,11 @@ The flyHigh app is my Final project designed during the last week of NYCDA 'Web 
 + Express
 + Pug
 + PostgreSQL
++ API
 
 
 
-![banner](https://github.com/mumtazakhtar/FlyHigh/blob/master/public/images/screenshots/searchresults.png?raw=true)
+![banner](https://github.com/mumtazakhtar/FlyHigh/blob/master/public/images/screenshots/searchpage.png?raw=true)
 > Visualization of serach results page where you can see all the cities with hot weather type, and aslo you can check the flights to that city.
 
 ### Concepts Utilized
@@ -41,7 +42,7 @@ The flyHigh app is my Final project designed during the last week of NYCDA 'Web 
 
 
 ![banner](https://github.com/mumtazakhtar/FlyHigh/blob/master/public/images/screenshots/flightresults.png?raw=true)
-> Visualization of allposts page where you can see everybody's posts. You can also click on a particular post which redirects to persons profile where you can view all the posts along with comments.
+> Visualization of flight results page where all the flights on user specified date to the city are displayed. You can also see the connecting flights if there are no direct flights by clicking on view details button.
 
 
 
