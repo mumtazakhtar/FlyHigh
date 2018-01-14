@@ -16,7 +16,13 @@ const sequelize = new Sequelize('ddrkq4o84es9g0', 'fbsrlxkyyzonat', '9d8bc339f57
     storage: './session.postgres'
 })
 
-app.use(express.static('../public'))
+/*const sequelize = new Sequelize('anotherme', process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+  host: 'localhost',
+  dialect: 'postgres',
+  storage: './session.postgres'
+})*/
+
+app.use(express.static('./public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('view engine', 'pug')
