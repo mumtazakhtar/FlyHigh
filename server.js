@@ -10,8 +10,8 @@ const fetch = require('node-fetch');
 const app = express();
 
 //<--------connecting to postgreSql database--------->
-const sequelize = new Sequelize('d48r9jkvfh00dh', 'xiaajynxoxyzxb', 'bea69bbb99fd996107fd51d4f7418580584299e16125f3c12ff326d4287b15ae', {
-    host: 'ec2-54-217-218-80.eu-west-1.compute.amazonaws.com',
+const sequelize = new Sequelize('ddrkq4o84es9g0', 'fbsrlxkyyzonat', '9d8bc339f57fe9fd6140c5422892ec9e5842f9c0a93c2def70d65c6727f7793f', {
+    host: 'ec2-54-221-251-195.compute-1.amazonaws.com',
     dialect: 'postgres',
     storage: './session.postgres'
 })
