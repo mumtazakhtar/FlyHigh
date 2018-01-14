@@ -289,6 +289,7 @@ function requestHeader(){
 sequelize.sync()
 
 //<---------Port---------->
-app.listen(4000, function(){
-	console.log("app listening at port 4000")
+var port = process.env.PORT || 8080;
+app.listen(port, function(){
+	console.log("app listening at port " + port);
 })
